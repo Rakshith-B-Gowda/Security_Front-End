@@ -6,10 +6,9 @@ import NotFound from '../common/NotFound';
 const Login = lazy(() => import('../pages/Login'));
 const SignUp = lazy(() => import('../pages/SignUp'));
 
-// Dummy authentication check (replace with real logic)
+// Authentication check: use sessionStorage token
 const isAuthenticated = () => {
-  // e.g., check localStorage for a token
-  return false;
+  return !!sessionStorage.getItem('token');
 };
 
 // PublicRoute: Only for unauthenticated users
@@ -40,15 +39,6 @@ export default function AppRoutes() {
             <PublicRoute>
               <SignUp />
             </PublicRoute>
-          }
-        />
-        {/* Example private route (replace with your dashboard or home) */}
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <div>Home (Private)</div>
-            </PrivateRoute>
           }
         />
         {/* 404 Not Found */}

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Image, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { login as loginApi } from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 
 const validateEmail = (email) => {
     if (!email) return 'Email is required.';
@@ -25,6 +27,7 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [authMessage, setAuthMessage] = useState({ type: '', text: '' });
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,16 +38,23 @@ export default function LoginPage() {
         setAuthMessage({ type: '', text: '' });
         if (!emailError && !passwordError) {
             setLoading(true);
-            // Simulated asynchronous login
-            setTimeout(() => {
-                setLoading(false);
-                if (email === 'test@test.com' && password === 'password') {
+            try {
+                const data = await loginApi({ email, password });
+                if (data.token && !data.token.toLowerCase().includes('failed')) {
+                    login(data.token);
                     setAuthMessage({ type: 'success', text: 'Login successful! Redirecting...' });
-                    setTimeout(() => navigate('/'), 1200);
+                    console.log('JWT Token:', data.token);
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 1200);
                 } else {
                     setAuthMessage({ type: 'danger', text: 'Invalid email or password.' });
                 }
-            }, 1200);
+            } catch (err) {
+                setAuthMessage({ type: 'danger', text: err.message || 'Login failed.' });
+            } finally {
+                setLoading(false);
+            }
         }
     };
 
