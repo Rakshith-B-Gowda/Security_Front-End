@@ -2,10 +2,9 @@ import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-// Dummy authentication check (should match AppRoutes)
+// Authentication check: use sessionStorage token
 const isAuthenticated = () => {
-  // e.g., check localStorage for a token
-  return false;
+  return !!sessionStorage.getItem('token');
 };
 
 export default function NotFound() {

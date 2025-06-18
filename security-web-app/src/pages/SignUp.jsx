@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Image, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { signup as signupApi } from '../services/authService';
 
 const validateName = (name) => {
     if (!name) return 'Name is required.';
@@ -59,16 +60,15 @@ export default function SignUpPage() {
 
         if (!nameError && !emailError && !passwordError && !confirmPasswordError) {
             setLoading(true);
-            // Simulate async signup (replace with your actual signup logic)
-            setTimeout(() => {
+            try {
+                const result = await signupApi({ name, email, password });
+                setAuthMessage({ type: 'success', text: result });
+                setTimeout(() => navigate('/login'), 1200);
+            } catch (err) {
+                setAuthMessage({ type: 'danger', text: err.message || 'Signup failed.' });
+            } finally {
                 setLoading(false);
-                if (email === 'test@test.com') {
-                    setAuthMessage({ type: 'danger', text: 'Email already exists.' });
-                } else {
-                    setAuthMessage({ type: 'success', text: 'Sign up successful! Redirecting to login...' });
-                    setTimeout(() => navigate('/login'), 1200);
-                }
-            }, 1200);
+            }
         }
     };
 
