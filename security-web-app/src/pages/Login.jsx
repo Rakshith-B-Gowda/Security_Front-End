@@ -42,6 +42,8 @@ export default function LoginPage() {
                 const data = await loginApi({ email, password });
                 if (data.token && !data.token.toLowerCase().includes('failed')) {
                     login(data.token);
+                    console.log(email);
+                    localStorage.setItem('email', email); // Store email in local storage
                     setAuthMessage({ type: 'success', text: 'Login successful! Redirecting...' });
                     console.log('JWT Token:', data.token);
                     setTimeout(() => {
@@ -90,7 +92,6 @@ export default function LoginPage() {
                                     <Form.Text className="text-danger">{errors.email}</Form.Text>
                                 )}
                             </Form.Group>
-
                             <Form.Group className="mb-4" controlId="formPassword">
                                 <Form.Label>Password</Form.Label>
                                 <div className="input-group">
@@ -116,7 +117,6 @@ export default function LoginPage() {
                                     <Form.Text className="text-danger">{errors.password}</Form.Text>
                                 )}
                             </Form.Group>
-
                             <Button
                                 variant="primary"
                                 type="submit"
@@ -134,7 +134,6 @@ export default function LoginPage() {
                                 )}
                             </Button>
                         </Form>
-
                         <div className="mt-3 text-center">
                             <span>Don't have an account? </span>
                             <Link to="/signup">Sign Up</Link>

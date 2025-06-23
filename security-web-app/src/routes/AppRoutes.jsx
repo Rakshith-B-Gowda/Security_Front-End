@@ -3,8 +3,10 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import RouteLoader from '../common/RouteLoader';
 import NotFound from '../common/NotFound';
 
+
 const Login = lazy(() => import('../pages/Login'));
 const SignUp = lazy(() => import('../pages/SignUp'));
+const UserPage = lazy(() =>import('../pages/UserPage'));
 
 // Authentication check: use sessionStorage token
 const isAuthenticated = () => {
@@ -41,8 +43,28 @@ export default function AppRoutes() {
             </PublicRoute>
           }
         />
+
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Navigate to="/user-dashboard" replace />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/user-dashboard"
+          element={
+            <PrivateRoute>
+              <UserPage/>
+            </PrivateRoute>
+          }
+        />
         {/* 404 Not Found */}
         <Route path="*" element={<NotFound />} />
+       
+        
       </Routes>
     </Suspense>
   );
