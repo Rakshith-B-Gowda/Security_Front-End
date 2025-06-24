@@ -16,7 +16,6 @@ const UserPage = () => {
     getUserByEmail(email)
       .then((data) => {
         setUser(data);
-        console.log(user);
         setLoading(false);
       })
       .catch((err) => {
@@ -28,13 +27,10 @@ const UserPage = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   if (!user) return <div>No user data found.</div>;
-  if(user){
-    console.log(user);
-  }
 
   return (
     <div>
-      <h2>Welcome, { user.data.name} {user.data.id} {user.data.email} !</h2>
+      <h2>Welcome, User, Name: {user.data.name}, Role: {user.data.role}, Email: {user.data.email} !</h2>
       {/* You can display more user details here if needed */}
     </div>
   );
