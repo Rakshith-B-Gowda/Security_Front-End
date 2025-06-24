@@ -31,3 +31,7 @@ export const adminUpdatePermission = (updateByAdminDto) =>
 // Get user by email
 export const getUserByEmail = (email) =>
   axiosInstance.get(`/user/by-email/${encodeURIComponent(email)}`);
+
+
+export const getUserNotifications = (email) =>
+axiosInstance.get(`/user/notification/${encodeURIComponent(email)}`);
