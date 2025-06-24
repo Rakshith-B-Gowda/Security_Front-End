@@ -14,34 +14,33 @@ export default function Header() {
 
   // Handler for the "Read/Upload" button
   const handleReadUpload = () => {
-    // You'll need to define where this button should navigate to.
-    // For example, if you have a page for file uploads/reads:
     navigate('/upload-excel'); // Replace with your actual route for upload/read
   };
 
   return (
-    <Navbar bg="primary" variant="dark" expand="lg">
+    <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect sticky="top">
       <Container>
         <Navbar.Brand href="/">ExcelDashboard</Navbar.Brand>
-        <Nav className="ms-auto">
-          {token && (
-            <>
-              {/* Read/Upload Button */}
-              <Button
-                variant="outline-light" // You can change the variant if needed
-                onClick={handleReadUpload}
-                className="me-2" // Add margin-right to separate it from Logout
-              >
-                Read/Upload
-              </Button>
-
-              {/* Logout Button */}
-              <Button variant="outline-light" onClick={handleLogout}>
-                Logout
-              </Button>
-            </>
-          )}
-        </Nav>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ms-auto align-items-center">
+            {token && (
+              <>
+                {/* Show buttons always, let Navbar handle collapse/expand */}
+                <Button
+                  variant="outline-light"
+                  onClick={handleReadUpload}
+                  className="me-2 mb-2 mb-lg-0"
+                >
+                  Read/Upload
+                </Button>
+                <Button variant="outline-light" onClick={handleLogout} className="mb-2 mb-lg-0">
+                  Logout
+                </Button>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Alert, Spinner, Badge, Dropdown, DropdownButton } from 'react-bootstrap';
-import axios from 'axios';
-
-const API_BASE_URL = 'http://localhost:9092/admin/requests';
+import {
+  listAllRequests,
+  listPendingRequests,
+  listApproved,
+  listRejected,
+  approveRequest,
+  rejectRequest,
+} from '../services/adminService';
 
 function AdminDashboard() {
   const [requests, setRequests] = useState([]);
@@ -13,6 +18,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     fetchRequestsByStatus(viewMode);
+    // eslint-disable-next-line
   }, [viewMode]);
 
   const fetchRequestsByStatus = async (statusFilter) => {
@@ -20,32 +26,28 @@ function AdminDashboard() {
     setError(null);
     setSuccessMessage(null);
 
-    let endpoint;
-    switch (statusFilter) {
-      case 'all':
-        endpoint = `${API_BASE_URL}/all`;
-        break;
-      case 'pending':
-        endpoint = `${API_BASE_URL}/pending`;
-        break;
-      case 'approved':
-        endpoint = `${API_BASE_URL}/approvedlist`;
-        break;
-      case 'rejected':
-        endpoint = `${API_BASE_URL}/rejectedlist`;
-        break;
-      default:
-        console.error('Invalid status filter:', statusFilter);
-        setError('Invalid view mode selected. Please choose a valid filter.');
-        setLoading(false);
-        return;
-    }
-
     try {
-      const response = await axios.get(endpoint);
+      let response;
+      switch (statusFilter) {
+        case 'all':
+          response = await listAllRequests();
+          break;
+        case 'pending':
+          response = await listPendingRequests();
+          break;
+        case 'approved':
+          response = await listApproved();
+          break;
+        case 'rejected':
+          response = await listRejected();
+          break;
+        default:
+          setError('Invalid view mode selected. Please choose a valid filter.');
+          setLoading(false);
+          return;
+      }
       setRequests(response.data);
     } catch (err) {
-      console.error(`Error fetching ${statusFilter} requests:`, err);
       setError(`Failed to load ${statusFilter} requests. Please ensure the backend is running and accessible.`);
     } finally {
       setLoading(false);
@@ -57,12 +59,15 @@ function AdminDashboard() {
     setError(null);
     setSuccessMessage(null);
     try {
-      const endpoint = `${API_BASE_URL}/${actionType}/${requestId}`;
-      const response = await axios.put(endpoint);
+      let response;
+      if (actionType === 'approve') {
+        response = await approveRequest(requestId);
+      } else if (actionType === 'reject') {
+        response = await rejectRequest(requestId);
+      }
       setSuccessMessage(response.data);
       fetchRequestsByStatus(viewMode); // Re-fetch based on current viewMode
     } catch (err) {
-      console.error(`Error ${actionType}ing request:`, err);
       if (err.response) {
         setError(`Failed to ${actionType} request: ${err.response.data}`);
       } else {
@@ -86,17 +91,8 @@ function AdminDashboard() {
     }
   };
 
-  // Determine which list of requests to display based on the current viewMode
-  // This line was already present in the previous code and correctly defines 'requestsToDisplay'.
-  const requestsToDisplay = requests; // 'requests' directly holds the filtered data now
-
-  // --- ADD THIS BLOCK ---
-  // Define currentViewTitle here before it's used in the JSX
+  const requestsToDisplay = requests;
   const currentViewTitle = `${viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} Signup Requests`;
-  // If you prefer a more specific title for "All", you could do:
-  // const currentViewTitle = viewMode === 'all' ? 'All Signup Requests' : `${viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} Signup Requests`;
-  // --- END ADD THIS BLOCK ---
-
 
   if (loading) {
     return (
@@ -137,7 +133,7 @@ function AdminDashboard() {
       {error && <Alert variant="danger">{error}</Alert>}
       {successMessage && <Alert variant="success">{successMessage}</Alert>}
 
-      <h3 className="mb-3 text-center">{currentViewTitle}</h3> {/* This is where it was undefined */}
+      <h3 className="mb-3 text-center">{currentViewTitle}</h3>
 
       {requestsToDisplay.length === 0 ? (
         <Alert variant="info" className="text-center">

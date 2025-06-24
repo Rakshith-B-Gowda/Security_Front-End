@@ -42,10 +42,8 @@ export default function LoginPage() {
                 const data = await loginApi({ email, password });
                 if (data.token && !data.token.toLowerCase().includes('failed')) {
                     login(data.token);
-                    console.log(email);
                     localStorage.setItem('email', email); // Store email in local storage
                     setAuthMessage({ type: 'success', text: 'Login successful! Redirecting...' });
-                    console.log('JWT Token:', data.token);
                     setTimeout(() => {
                         navigate('/');
                     }, 1200);
