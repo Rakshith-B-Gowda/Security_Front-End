@@ -6,36 +6,26 @@ import {
   Overlay,
 } from 'react-bootstrap';
 import { FaBell } from 'react-icons/fa';
-import { getUserNotifications, getUserByEmail } from '../services/userService';
+import { getUserNotifications } from '../services/userService';
 
-const UserNavbar = ({ email }) => {
+const UserNavbar = ({ user }) => {
   const [notificationCount, setNotificationCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [showNotifPopover, setShowNotifPopover] = useState(false);
   const [showProfilePopover, setShowProfilePopover] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
 
   const bellRef = useRef(null);
   const profileRef = useRef(null);
 
   const fetchNotifications = async () => {
     try {
-      const res = await getUserNotifications(email);
+      const res = await getUserNotifications(user.email);
       const all = res.data || [];
       const unread = all.filter(n => !n.read);
       setNotifications(all);
       setNotificationCount(unread.length);
     } catch (err) {
       console.error('Error fetching notifications:', err);
-    }
-  };
-
-  const fetchUserInfo = async () => {
-    try {
-      const res = await getUserByEmail(email);
-      setUserInfo(res.data);
-    } catch (err) {
-      console.error('Error fetching user info:', err);
     }
   };
 
@@ -46,17 +36,16 @@ const UserNavbar = ({ email }) => {
     setNotificationCount(0);
   };
 
-  const handleProfileClick = async () => {
-    await fetchUserInfo();
+  const handleProfileClick = () => {
     setShowProfilePopover(!showProfilePopover);
     setShowNotifPopover(false);
   };
 
   useEffect(() => {
-    if (email) {
+    if (user && user.email) {
       fetchNotifications();
     }
-  }, [email]);
+  }, [user]);
 
   return (
     <Container className="d-flex justify-content-end align-items-center gap-4 py-2">
@@ -109,7 +98,7 @@ const UserNavbar = ({ email }) => {
         >
           <h6 className="mb-3 fw-bold">Notifications</h6>
           {notifications.length === 0 ? (
-            <div className="text-muted text-center">no notifications found</div>
+            <div className="text-muted text-center">No Notifications!</div>
           ) : (
             <div>
               {notifications.map((note, index) => (
@@ -153,16 +142,13 @@ const UserNavbar = ({ email }) => {
             maxWidth: '100%',
           }}
         >
-          <h6 className="fw-bold mb-2">User Profile</h6>
-          {userInfo ? (
-            <ul className="list-unstyled small mb-0">
-              <li><strong>Name:</strong> {userInfo.name}</li>
-              <li><strong>Email:</strong> {userInfo.email}</li>
-              <li><strong>Permission:</strong> {userInfo.role}</li>
-            </ul>
-          ) : (
-            <div>Loading user info...</div>
-          )}
+          <h6 className="fw-bold mb-2">Profile</h6>
+          <ul className="list-unstyled small mb-0">
+            <li><strong>Name:</strong> {user.name}</li>
+            <li><strong>Email:</strong> {user.email}</li>
+            <li><strong>Role:</strong> {user.role}</li>
+            <li><strong>Permission:</strong> {user.permission}</li>
+          </ul>
         </div>
       </Overlay>
     </Container>
