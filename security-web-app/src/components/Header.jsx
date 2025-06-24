@@ -12,15 +12,34 @@ export default function Header() {
     navigate('/login');
   };
 
+  // Handler for the "Read/Upload" button
+  const handleReadUpload = () => {
+    // You'll need to define where this button should navigate to.
+    // For example, if you have a page for file uploads/reads:
+    navigate('/upload-excel'); // Replace with your actual route for upload/read
+  };
+
   return (
     <Navbar bg="primary" variant="dark" expand="lg">
       <Container>
         <Navbar.Brand href="/">ExcelDashboard</Navbar.Brand>
         <Nav className="ms-auto">
           {token && (
-            <Button variant="outline-light" onClick={handleLogout} className="ms-2">
-              Logout
-            </Button>
+            <>
+              {/* Read/Upload Button */}
+              <Button
+                variant="outline-light" // You can change the variant if needed
+                onClick={handleReadUpload}
+                className="me-2" // Add margin-right to separate it from Logout
+              >
+                Read/Upload
+              </Button>
+
+              {/* Logout Button */}
+              <Button variant="outline-light" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
           )}
         </Nav>
       </Container>
