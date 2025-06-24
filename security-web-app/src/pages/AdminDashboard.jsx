@@ -29,10 +29,10 @@ function AdminDashboard() {
         endpoint = `${API_BASE_URL}/pending`;
         break;
       case 'approved':
-        endpoint = `${API_BASE_URL}/approved`;
+        endpoint = `${API_BASE_URL}/approvedlist`;
         break;
       case 'rejected':
-        endpoint = `${API_BASE_URL}/rejected`;
+        endpoint = `${API_BASE_URL}/rejectedlist`;
         break;
       default:
         console.error('Invalid status filter:', statusFilter);
