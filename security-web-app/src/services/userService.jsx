@@ -1,4 +1,4 @@
-import axiosInstance from './axiosinstance';
+import axiosInstance from './axiosInstance';
 
 // Create a new user
 export const createUser = (userDto) =>
