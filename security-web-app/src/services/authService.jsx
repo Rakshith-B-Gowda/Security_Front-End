@@ -1,28 +1,26 @@
+import axios from 'axios';
 import { apiUrl } from './api';
 
 export async function login({ email, password }) {
-  const response = await fetch(apiUrl('/auth/login'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  });
-  const data = await response.json();
-  if (!response.ok) {
-    // Backend sends { token: 'Login failed' } or similar
-    throw new Error(data.token || 'Login failed');
+  try {
+    const response = await axios.post(apiUrl('/auth/login'), { email, password }, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response.data; // { token: ... }
+  } catch (error) {
+    const message = error.response?.data?.token || 'Login failed';
+    throw new Error(message);
   }
-  return data; // { token: ... }
 }
 
 export async function signup({ name, email, password }) {
-  const response = await fetch(apiUrl('/auth/signup'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email, password })
-  });
-  const text = await response.text();
-  if (!response.ok) {
-    throw new Error(text || 'Signup failed');
+  try {
+    const response = await axios.post(apiUrl('/auth/signup'), { name, email, password }, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response.data; // 'Sign-up successful' or error string
+  } catch (error) {
+    const message = error.response?.data || 'Signup failed';
+    throw new Error(message);
   }
-  return text; // 'Sign-up successful' or error string
 }
