@@ -12,7 +12,6 @@ axiosInstance.interceptors.request.use(
     (config) => {
         // Add authorization token or other headers if needed
         const token = sessionStorage.getItem('token'); // Retrieve token from sessionStorage
-        console.log('Token:', token);
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
