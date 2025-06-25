@@ -111,21 +111,21 @@ function AdminDashboard() {
         <h2 className="mb-0">Admin Dashboard</h2>
         <DropdownButton
           id="dropdown-view-mode"
-          title={`View  ${viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} Requests`}
+          title={`${viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} Requests`}
           variant="primary"
           disabled={loading}
         >
           <Dropdown.Item onClick={() => setViewMode('all')} active={viewMode === 'all'}>
-            All Requests
+          View all Requests
           </Dropdown.Item>
           <Dropdown.Item onClick={() => setViewMode('pending')} active={viewMode === 'pending'}>
-            Pending Requests
+            View Pending Requests
           </Dropdown.Item>
           <Dropdown.Item onClick={() => setViewMode('approved')} active={viewMode === 'approved'}>
-            Approved Requests
+            View Approved Requests
           </Dropdown.Item>
           <Dropdown.Item onClick={() => setViewMode('rejected')} active={viewMode === 'rejected'}>
-            Rejected Requests
+            View Rejected Requests
           </Dropdown.Item>
         </DropdownButton>
       </div>
