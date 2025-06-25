@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
-
 import {
   Container,
   Badge,
-  Image,
   Overlay,
 } from 'react-bootstrap';
 import { FaBell } from 'react-icons/fa';
@@ -47,6 +45,7 @@ const UserNavbar = ({ user }) => {
     if (user && user.email) {
       fetchNotifications();
     }
+    // eslint-disable-next-line
   }, [user]);
 
   return (
@@ -86,46 +85,46 @@ const UserNavbar = ({ user }) => {
         rootClose
         onHide={() => setShowNotifPopover(false)}
       >
-        <div
-          className="shadow border bg-white rounded"
-          style={{
-            minWidth: '250px',
-            maxWidth: '320px',
-            maxHeight: '300px',
-            overflowY: 'auto',
-            marginTop: '8px',
-            zIndex: 9999,
-            padding: '0.75rem',
-          }}
-        >
-          <h6 className="mb-3 fw-bold">Notifications</h6>
-          {notifications.length === 0 ? (
-            <div className="text-muted text-center">No Notifications!</div>
-          ) : (
-            <div>
-              {notifications.map((note, index) => (
-                <div key={index}>
-                  <div className="mb-1">{note.message}</div>
-                  {index < notifications.length - 1 && <hr className="my-2" />}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        {({ placement, show, ...props }) => (
+          <div
+            {...props}
+            className="shadow border bg-white rounded"
+            style={{
+              minWidth: '250px',
+              maxWidth: '320px',
+              maxHeight: '300px',
+              overflowY: 'auto',
+              marginTop: '8px',
+              zIndex: 9999,
+              padding: '0.75rem',
+              ...props.style,
+            }}
+          >
+            <h6 className="mb-3 fw-bold">Notifications</h6>
+            {notifications.length === 0 ? (
+              <div className="text-muted text-center">No Notifications!</div>
+            ) : (
+              <div>
+                {notifications.map((note, index) => (
+                  <div key={index}>
+                    <div className="mb-1">{note.message}</div>
+                    {index < notifications.length - 1 && <hr className="my-2" />}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </Overlay>
 
-{/* Profile Icon */}
-<div
-  style={{ cursor: 'pointer' }}
-  onClick={handleProfileClick}
-  ref={profileRef}
->
-  <FaUserCircle size={28} className="text-dark" />
-</div>
-
-
-
-      
+      {/* Profile Icon */}
+      <div
+        style={{ cursor: 'pointer' }}
+        onClick={handleProfileClick}
+        ref={profileRef}
+      >
+        <FaUserCircle size={28} className="text-dark" />
+      </div>
 
       {/* Profile Popover */}
       <Overlay
@@ -136,25 +135,29 @@ const UserNavbar = ({ user }) => {
         rootClose
         onHide={() => setShowProfilePopover(false)}
       >
-        <div
-          className="shadow border bg-white rounded"
-          style={{
-            display: 'inline-block',
-            padding: '0.75rem',
-            marginTop: '8px',
-            zIndex: 9999,
-            whiteSpace: 'nowrap',
-            maxWidth: '100%',
-          }}
-        >
-          <h6 className="fw-bold mb-2">Profile</h6>
-          <ul className="list-unstyled small mb-0">
-            <li><strong>Name:</strong> {user.name}</li>
-            <li><strong>Email:</strong> {user.email}</li>
-            {/* <li><strong>Role:</strong> {user.role}</li> */}
-            <li><strong>Permission:</strong> {user.permission}</li>
-          </ul>
-        </div>
+        {({ placement, show, ...props }) => (
+          <div
+            {...props}
+            className="shadow border bg-white rounded"
+            style={{
+              display: 'inline-block',
+              padding: '0.75rem',
+              marginTop: '8px',
+              zIndex: 9999,
+              whiteSpace: 'nowrap',
+              maxWidth: '100%',
+              ...props.style,
+            }}
+          >
+            <h6 className="fw-bold mb-2">Profile</h6>
+            <ul className="list-unstyled small mb-0">
+              <li><strong>Name:</strong> {user.name}</li>
+              <li><strong>Email:</strong> {user.email}</li>
+              {/* <li><strong>Role:</strong> {user.role}</li> */}
+              <li><strong>Permission:</strong> {user.permission}</li>
+            </ul>
+          </div>
+        )}
       </Overlay>
     </Container>
   );
