@@ -1,0 +1,47 @@
+.nav-container {
+    background-color: #f6f7fb;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 6px 6px 20px #d6d8e1, -6px -6px 20px #ffffff;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .icon-wrapper {
+    position: relative;
+    cursor: pointer;
+    padding: 0.5rem;
+    background: linear-gradient(145deg, #e0e5ec, #fff);
+    border-radius: 50%;
+    box-shadow: 4px 4px 10px #d1d9e6, -4px -4px 10px #ffffff;
+    transition: transform 0.2s ease;
+  }
+  
+  .icon-wrapper:hover {
+    transform: scale(1.1);
+  }
+  
+  .notif-badge {
+    background-color: #ff6584 !important;
+    font-size: 0.65rem;
+    padding: 0.3rem 0.45rem;
+    top: -4px;
+    right: -4px;
+  }
+  
+  .popover-box {
+    border-radius: 0.75rem;
+    box-shadow: 0px 8px 24px rgba(0,0,0,0.1);
+    animation: fadeInScale 0.25s ease forwards;
+  }
+  
+  @keyframes fadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  

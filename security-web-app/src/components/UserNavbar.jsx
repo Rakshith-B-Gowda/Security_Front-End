@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { FaUserCircle } from 'react-icons/fa';
+
 import {
   Container,
   Badge,
@@ -112,15 +114,18 @@ const UserNavbar = ({ user }) => {
         </div>
       </Overlay>
 
-      {/* Profile Icon */}
-      <Image
-        ref={profileRef}
-        src="https://www.gravatar.com/avatar?d=mp&s=32"
-        roundedCircle
-        alt="Profile"
-        style={{ width: '32px', height: '32px', cursor: 'pointer' }}
-        onClick={handleProfileClick}
-      />
+{/* Profile Icon */}
+<div
+  style={{ cursor: 'pointer' }}
+  onClick={handleProfileClick}
+  ref={profileRef}
+>
+  <FaUserCircle size={28} className="text-dark" />
+</div>
+
+
+
+      
 
       {/* Profile Popover */}
       <Overlay
@@ -146,7 +151,7 @@ const UserNavbar = ({ user }) => {
           <ul className="list-unstyled small mb-0">
             <li><strong>Name:</strong> {user.name}</li>
             <li><strong>Email:</strong> {user.email}</li>
-            <li><strong>Role:</strong> {user.role}</li>
+            {/* <li><strong>Role:</strong> {user.role}</li> */}
             <li><strong>Permission:</strong> {user.permission}</li>
           </ul>
         </div>

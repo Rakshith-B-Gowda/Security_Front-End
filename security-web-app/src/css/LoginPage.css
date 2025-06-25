@@ -1,0 +1,81 @@
+
+body {
+    background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .glassy-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  .glassy-card h2 {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #343a40;
+    text-align: center;
+  }
+  
+  .glassy-card .form-control {
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1rem;
+  }
+  
+  .glassy-card .btn-primary {
+    border-radius: 25px;
+    font-weight: 600;
+    padding: 12px;
+    transition: all 0.3s ease;
+  }
+  
+  .glassy-card .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+  }
+  
+  .glassy-card .input-group > .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .glassy-card .input-group .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .fade-image {
+    animation: fadeIn 1s ease;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
