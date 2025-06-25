@@ -1,4 +1,3 @@
-
 body {
     background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
     font-family: 'Poppins', sans-serif;
@@ -29,20 +28,27 @@ body {
   
   .glassy-card .form-control {
     border-radius: 12px;
-    padding: 14px;
-    font-size: 1rem;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    height: 38px;
+    /* Reduced height and padding for smaller fields */
   }
   
   .glassy-card .btn-primary {
-    border-radius: 25px;
+    background: linear-gradient(to right, #6c63ff, #7e5fff);
+    border: none;
+    border-radius: 0.6rem;
     font-weight: 600;
-    padding: 12px;
-    transition: all 0.3s ease;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
   }
   
   .glassy-card .btn-primary:hover {
     background-color: #0056b3;
     transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(108, 99, 255, 0.3);
   }
   
   .glassy-card .input-group > .form-control {
@@ -53,6 +59,16 @@ body {
   .glassy-card .input-group .btn {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    height: 38px; /* Match input height */
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .glassy-card .input-group .btn svg {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
   }
   
   .fade-image {
@@ -78,4 +94,3 @@ body {
       opacity: 1;
     }
   }
-  

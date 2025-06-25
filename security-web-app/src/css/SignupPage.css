@@ -20,6 +20,7 @@
   .signup-container h2 {
     font-weight: 600;
     color: #3b3f5c;
+    text-align: center;
   }
   
   .signup-container .form-label {
@@ -28,9 +29,12 @@
   }
   
   .signup-container .form-control {
-    border-radius: 0.5rem;
+    border-radius: 12px; /* Match Login page curvey edges */
     transition: all 0.3s ease;
     box-shadow: none;
+    padding: 6px 10px; /* Slightly reduced for smaller fields */
+    font-size: 0.95rem;
+    height: 32px; /* Smaller height for compact look */
   }
   
   .signup-container .form-control:focus {
@@ -39,7 +43,17 @@
   }
   
   .signup-container .input-group .btn {
-    border-radius: 0 0.5rem 0.5rem 0;
+    border-radius: 0 12px 12px 0; /* Match text field curvey edge */
+    height: 32px; /* Match input height */
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .signup-container .input-group .btn svg {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
   }
   
   .signup-container .btn-primary {
@@ -69,4 +83,3 @@
     color: #4638ff;
     text-decoration: underline;
   }
-  
