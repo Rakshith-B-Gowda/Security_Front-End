@@ -5,15 +5,15 @@ import {
   Badge,
   Overlay,
 } from 'react-bootstrap';
+
 import { FaBell } from 'react-icons/fa';
-import { getUserNotifications } from '../services/userService';
+import { getUserNotifications, markNotificationAsRead } from '../services/userService';
 
 const UserNavbar = ({ user }) => {
   const [notificationCount, setNotificationCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [showNotifPopover, setShowNotifPopover] = useState(false);
   const [showProfilePopover, setShowProfilePopover] = useState(false);
-
   const bellRef = useRef(null);
   const profileRef = useRef(null);
 
@@ -29,6 +29,17 @@ const UserNavbar = ({ user }) => {
     }
   };
 
+  const markNotificationAsReadHandler = async (id) => {
+    try {
+      await markNotificationAsRead(id);
+      fetchNotifications();
+    } catch (err) {
+      console.error('Failed to mark notification as read:', err);
+    }
+  };
+
+
+
   const handleBellClick = async () => {
     await fetchNotifications();
     setShowNotifPopover(!showNotifPopover);
@@ -40,6 +51,7 @@ const UserNavbar = ({ user }) => {
     setShowProfilePopover(!showProfilePopover);
     setShowNotifPopover(false);
   };
+  
 
   useEffect(() => {
     if (user && user.email) {
@@ -105,12 +117,44 @@ const UserNavbar = ({ user }) => {
               <div className="text-muted text-center">No Notifications!</div>
             ) : (
               <div>
-                {notifications.map((note, index) => (
-                  <div key={index}>
-                    <div className="mb-1">{note.message}</div>
-                    {index < notifications.length - 1 && <hr className="my-2" />}
-                  </div>
-                ))}
+                {notifications.map((note, index) => {
+                  const formattedDate = new Date(note.timestamp).toLocaleString('en-IN', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                  });
+
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => {
+                        if (!note.read) {
+                          markNotificationAsReadHandler(note.id);
+                        }
+                      }}
+
+                      className={`mb-2 p-2 rounded ${!note.read ? 'bg-light border-start border-4 border-primary' : ''}`}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <div className="fw-medium d-flex justify-content-between align-items-center">
+                        {note.message}
+                        {!note.read && (
+                          <span
+                            className="ms-2 badge bg-primary rounded-circle"
+                            style={{ width: 8, height: 8 }}
+                          />
+                        )}
+                      </div>
+                      <div className="text-muted small">{formattedDate}</div>
+                      {index < notifications.length - 1 && <hr className="my-2" />}
+                    </div>
+                  );
+                })}
+
+
               </div>
             )}
           </div>

@@ -3,26 +3,25 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import RouteLoader from '../common/RouteLoader';
 import NotFound from '../common/NotFound';
 import Home from '../pages/Home';
+import RaiseRequest from '../pages/RaiseRequest';
+import { useAuth } from '../context/AuthContext';
 
-// Lazy load components for better performance
+// Lazy load components for performance
 const Login = lazy(() => import('../pages/Login'));
 const SignUp = lazy(() => import('../pages/SignUp'));
-const AdminDashboard = lazy(() => import('../pages/AdminDashboard')); // Import your AdminDashboard
-const UserPage = lazy(() =>import('../pages/UserPage'));
+const AdminDashboard = lazy(() => import('../pages/AdminDashboard'));
+const UserPage = lazy(() => import('../pages/UserPage'));
 
-// Authentication check: use sessionStorage token
-const isAuthenticated = () => {
-  return !!sessionStorage.getItem('token');
-};
+// Auth check
+const isAuthenticated = () => !!sessionStorage.getItem('token');
+const user = JSON.parse(sessionStorage.getItem('user') || 'null');
 
-// PublicRoute: Only accessible to unauthenticated users.
-// If authenticated, redirects to the home page.
+// PublicRoute: only accessible if not logged in
 function PublicRoute({ children }) {
   return !isAuthenticated() ? children : <Navigate to="/" replace />;
 }
 
-// PrivateRoute: Only accessible to authenticated users.
-// If not authenticated, redirects to the login page.
+// PrivateRoute: only accessible if logged in
 function PrivateRoute({ children }) {
   return isAuthenticated() ? children : <Navigate to="/login" replace />;
 }
@@ -31,6 +30,7 @@ export default function AppRoutes() {
   return (
     <Suspense fallback={<RouteLoader />}>
       <Routes>
+        {/* Public Auth Routes */}
         <Route
           path="/login"
           element={
@@ -47,7 +47,8 @@ export default function AppRoutes() {
             </PublicRoute>
           }
         />
-        {/* Protected Home route */}
+
+        {/* Private Routes */}
         <Route
           path="/"
           element={
@@ -56,7 +57,24 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
-        {/* 404 Not Found Route - Always keep this last */}
+        <Route
+          path="/user"
+          element={
+            <PrivateRoute>
+              <UserPage user={user} />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/raise-request"
+          element={
+            <PrivateRoute>
+              <RaiseRequest user={user} />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Fallback */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

@@ -18,7 +18,7 @@ export async function signup({ name, email, password }) {
     const response = await axios.post(apiUrl('/auth/signup'), { name, email, password }, {
       headers: { 'Content-Type': 'application/json' }
     });
-    return response.data; // 'Sign-up successful' or error string
+    return response.data; 
   } catch (error) {
     const message = error.response?.data || 'Signup failed';
     throw new Error(message);
