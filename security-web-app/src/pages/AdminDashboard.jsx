@@ -18,7 +18,6 @@ function AdminDashboard() {
 
   useEffect(() => {
     fetchRequestsByStatus(viewMode);
-   
   }, [viewMode]);
 
   const fetchRequestsByStatus = async (statusFilter) => {
@@ -66,7 +65,7 @@ function AdminDashboard() {
         response = await rejectRequest(requestId);
       }
       setSuccessMessage(response.data);
-      fetchRequestsByStatus(viewMode); 
+      fetchRequestsByStatus(viewMode);
     } catch (err) {
       if (err.response) {
         setError(`Failed to ${actionType} request: ${err.response.data}`);
@@ -109,25 +108,31 @@ function AdminDashboard() {
     <Container className="mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="mb-0">Admin Dashboard</h2>
-        <DropdownButton
-          id="dropdown-view-mode"
-          title={`${viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} Requests`}
-          variant="primary"
-          disabled={loading}
-        >
-          <Dropdown.Item onClick={() => setViewMode('all')} active={viewMode === 'all'}>
-          View all Requests
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => setViewMode('pending')} active={viewMode === 'pending'}>
-            View Pending Requests
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => setViewMode('approved')} active={viewMode === 'approved'}>
-            View Approved Requests
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => setViewMode('rejected')} active={viewMode === 'rejected'}>
-            View Rejected Requests
-          </Dropdown.Item>
-        </DropdownButton>
+        {/* Place the Button here, right before the DropdownButton */}
+        <div className="d-flex align-items-center"> {/* Use a div to group buttons */}
+          <Button variant="primary" className="me-2"> {/* Added variant and margin-end */}
+            View/Upload Excel
+          </Button>
+          <DropdownButton
+            id="dropdown-view-mode"
+            title={`${viewMode.charAt(0).toUpperCase() + viewMode.slice(1)} Requests`}
+            variant="primary"
+            disabled={loading}
+          >
+            <Dropdown.Item onClick={() => setViewMode('all')} active={viewMode === 'all'}>
+              View all Requests
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => setViewMode('pending')} active={viewMode === 'pending'}>
+              View Pending Requests
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => setViewMode('approved')} active={viewMode === 'approved'}>
+              View Approved Requests
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => setViewMode('rejected')} active={viewMode === 'rejected'}>
+              View Rejected Requests
+            </Dropdown.Item>
+          </DropdownButton>
+        </div>
       </div>
 
       {error && <Alert variant="danger">{error}</Alert>}
