@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Alert, Spinner, Badge, Dropdown, DropdownButton } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
+
 import {
   listAllRequests,
   listPendingRequests,
@@ -15,6 +17,9 @@ function AdminDashboard() {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [viewMode, setViewMode] = useState('all'); // Default view mode is 'all'
+
+  // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchRequestsByStatus(viewMode);
@@ -65,6 +70,7 @@ function AdminDashboard() {
         response = await rejectRequest(requestId);
       }
       setSuccessMessage(response.data);
+      // After action, re-fetch requests based on the current view mode
       fetchRequestsByStatus(viewMode);
     } catch (err) {
       if (err.response) {
@@ -75,6 +81,14 @@ function AdminDashboard() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // This function now explicitly navigates to a route that should trigger your NotFound page.
+  // In react-router-dom, `*` as a path in a <Route> component acts as a catch-all.
+  // Navigating to `*` directly in `useNavigate` will push that literal string to the URL,
+  // which your Router should then match with the catch-all route.
+  const handleExcelButtonClick = () => {
+    navigate('*');
   };
 
   const getStatusBadgeVariant = (status) => {
@@ -108,9 +122,12 @@ function AdminDashboard() {
     <Container className="mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="mb-0">Admin Dashboard</h2>
-        {/* Place the Button here, right before the DropdownButton */}
-        <div className="d-flex align-items-center"> {/* Use a div to group buttons */}
-          <Button variant="primary" className="me-2"> {/* Added variant and margin-end */}
+        <div className="d-flex align-items-center">
+          <Button
+            variant="primary"
+            className="me-2"
+            onClick={handleExcelButtonClick} // Calls the function that navigates to '*'
+          >
             View/Upload Excel
           </Button>
           <DropdownButton
