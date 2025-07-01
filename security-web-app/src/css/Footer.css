@@ -1,0 +1,30 @@
+.custom-footer {
+    background: linear-gradient(135deg, #6c63ff, #7e5fff);
+    padding: 0.75rem 0;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeSlideUp 0.6s ease-in-out;
+  }
+  
+  .footer-text {
+    color: white;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: text-shadow 0.3s ease;
+  }
+  
+  .footer-text:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  }
+  
+  @keyframes fadeSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

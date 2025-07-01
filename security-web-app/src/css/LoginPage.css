@@ -1,0 +1,96 @@
+body {
+    background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .glassy-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  .glassy-card h2 {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #343a40;
+    text-align: center;
+  }
+  
+  .glassy-card .form-control {
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    height: 38px;
+    /* Reduced height and padding for smaller fields */
+  }
+  
+  .glassy-card .btn-primary {
+    background: linear-gradient(to right, #6c63ff, #7e5fff);
+    border: none;
+    border-radius: 0.6rem;
+    font-weight: 600;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .glassy-card .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(108, 99, 255, 0.3);
+  }
+  
+  .glassy-card .input-group > .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .glassy-card .input-group .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    height: 38px; /* Match input height */
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .glassy-card .input-group .btn svg {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+  }
+  
+  .fade-image {
+    animation: fadeIn 1s ease;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
