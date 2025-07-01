@@ -35,3 +35,6 @@ export const getUserByEmail = (email) =>
 
 export const getUserNotifications = (email) =>
 axiosInstance.get(`/user/notification/${encodeURIComponent(email)}`);
+
+export const markNotificationAsRead = (id) =>
+  axiosInstance.patch(`/user/notification/${id}/read`);

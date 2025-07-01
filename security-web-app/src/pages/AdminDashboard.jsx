@@ -18,7 +18,7 @@ function AdminDashboard() {
 
   useEffect(() => {
     fetchRequestsByStatus(viewMode);
-    // eslint-disable-next-line
+   
   }, [viewMode]);
 
   const fetchRequestsByStatus = async (statusFilter) => {
@@ -66,7 +66,7 @@ function AdminDashboard() {
         response = await rejectRequest(requestId);
       }
       setSuccessMessage(response.data);
-      fetchRequestsByStatus(viewMode); // Re-fetch based on current viewMode
+      fetchRequestsByStatus(viewMode); 
     } catch (err) {
       if (err.response) {
         setError(`Failed to ${actionType} request: ${err.response.data}`);

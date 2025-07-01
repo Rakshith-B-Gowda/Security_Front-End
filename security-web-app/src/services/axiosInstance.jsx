@@ -1,38 +1,37 @@
 import axios from 'axios';
 import { API_BASE_URL } from './api';
 
-// Create an Axios instance
+
 const axiosInstance = axios.create({
-    baseURL: API_BASE_URL, // Use centralized API base URL
-    timeout: 5000, // Set timeout for requests
+    baseURL: API_BASE_URL, 
+    timeout: 5000, 
 });
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
     (config) => {
-        // Add authorization token or other headers if needed
-        const token = sessionStorage.getItem('token'); // Retrieve token from sessionStorage
+        
+        const token = sessionStorage.getItem('token'); 
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
     },
     (error) => {
-        // Handle request error
+        
         return Promise.reject(error);
     }
 );
 
-// Add a response interceptor
 axiosInstance.interceptors.response.use(
     (response) => {
-        // Process response data
+       
         return response;
     },
     (error) => {
-        // Handle response errors
+        
         if (error.response && error.response.status === 401) {
-            // Example: Redirect to login page if unauthorized
+           
         }
         return Promise.reject(error);
     }

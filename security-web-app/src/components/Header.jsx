@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import '../css/Header.css'; 
+import '../css/Header.css';
 
 export default function Header() {
   const { token, logout } = useAuth();
@@ -13,9 +13,9 @@ export default function Header() {
     navigate('/login');
   };
 
-  const handleReadUpload = () => {
-    navigate('/upload-excel');
-  };
+  // const handleRaiseRequest = () => {
+  //   navigate('/raise-request');
+  // };
 
   return (
     <Navbar className="custom-navbar" expand="lg" sticky="top">
@@ -28,12 +28,12 @@ export default function Header() {
           <Nav className="ms-auto align-items-center">
             {token && (
               <>
-                <Button
+                {/* <Button
                   className="nav-button glow-btn me-2 mb-2 mb-lg-0"
-                  onClick={handleReadUpload}
+                  onClick={handleRaiseRequest}
                 >
-                  Read / Upload
-                </Button>
+                  Raise Request
+                </Button> */}
                 <Button
                   className="nav-button glow-btn mb-2 mb-lg-0"
                   onClick={handleLogout}
